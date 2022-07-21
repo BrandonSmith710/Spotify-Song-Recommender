@@ -60,7 +60,7 @@ def view_name_and_id():
         
 
 '''the refresh route only need be used if a user would like to edit the size of the
-   database, otherwise the only required action will be to visit the add route once.'''
+   database, then simply run the add route with the adjusted parameters.'''
 
 @APP.route('/refresh')
 def refresh():
