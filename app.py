@@ -44,6 +44,7 @@ def root():
 def view_name_and_id():
     if request.method == 'POST':
         num = request.form.get('search2')
+        num = num.replace(',', '')
         if num.isdigit():
             num = int(num)
             if 0 <= num < 50000:
