@@ -23,6 +23,10 @@ class Song(DB.Model):
 
     def __repr__(self):
         return f'{self.name} is {round(self.duration_ms*60000, 2)} minutes long'
+    
+
+class UserIP(DB.Model):
+    ip = DB.Column(DB.String(50), primary_key = True, nullable = False)
 
 path = os.path.join(os.getcwd(), 'data.csv')
 df_song = pd.read_csv(path)
