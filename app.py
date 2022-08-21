@@ -1,4 +1,4 @@
-from data import df_song, DB, Song, feat_names
+from data import df_song, DB, Song, UserIP feat_names
 from flask import Flask, render_template, request
 import sqlite3
 from flask_sqlalchemy import SQLAlchemy
@@ -37,6 +37,10 @@ def root():
         for index in indices[0][1:]:
             rec.append(Song.query.filter(Song.ind == int(index)).first().name)
         result = ' | '.join(rec)
+        address = UserIP(ip = str(request.remote_addr))
+        if not UserIP.query.get(address.ip):
+            DB.session.add(address)
+        DB.session.commit()
         return render_template('results.html', answer = result)
     return render_template('base.html')
 
@@ -80,6 +84,10 @@ def add_one():
             DB.session.add(temp)
     DB.session.commit()
     return 'Songs have been added'
+
+@APP.route('/_see_addresses')
+def _see_addresses():
+    return str([uip.ip for uip in UserIP.query.all()])
 
 if __name__ == '__main__':
     APP.run(host = '127.0.0.1', port = 8080, debug = True)
