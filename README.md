@@ -1,5 +1,5 @@
 # Spotify-Song-Recommender
-This application is a song recommendation system which accepts a Spotify Song Identifier, and uses vectorized audio attributes of 50,000 Spotify songs to recommend the five most similar songs to the input song. First visit the view_name_and_id route, enter a number between 0 and 49,999, copy the id for the song that appears, and then visit the home route to paste the id and view the rcommendations.
+This application is a song recommendation system which accepts a Spotify Song Identifier, and uses vectorized audio attributes of 50,000 Spotify songs to recommend the five most similar songs to the input song. First visit the view_name_and_id route, enter a number between 0 and 49,999, copy the id for the song that appears, and then visit the home route to paste the id and view the recommendations.
 
 Installation:
 
