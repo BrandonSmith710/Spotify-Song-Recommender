@@ -85,9 +85,9 @@ def add_one():
     DB.session.commit()
     return 'Songs have been added'
 
-@APP.route('/_see_addresses')
-def _see_addresses():
-    return str([uip.ip for uip in UserIP.query.all()])
+# @APP.route('/_see_addresses')
+# def _see_addresses():
+#     return str([uip.ip for uip in UserIP.query.all()])
 
 if __name__ == '__main__':
     APP.run(host = '127.0.0.1', port = 8080, debug = True)
