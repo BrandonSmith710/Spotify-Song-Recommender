@@ -11,6 +11,7 @@ pandas = "*"
 scikit-learn = "==1.0.2"
 jinja2 = "*"
 numpy = "*"
+python-dotenv = "*"
 
 [dev-packages]
 

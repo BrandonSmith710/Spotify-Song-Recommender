@@ -5,6 +5,8 @@ from flask_sqlalchemy import SQLAlchemy
 import pickle
 import pandas as pd
 from sklearn.neighbors import NearestNeighbors
+from os import getenv
+
 '''
 suggest a song to the user based on audio attributes of the input song
 '''
@@ -23,7 +25,7 @@ def create_tables():
 @APP.route('/', methods=['GET', 'POST'])
 def root():
     if request.method == 'POST':
-        id = request.form.get('search')
+        id = request.values['search']
         try:
             song = Song.query.get(id)
             query = [song.acoustic, song.danceable, song.energy, song.loudness,
@@ -47,7 +49,7 @@ def root():
 @APP.route('/view_name_and_id', methods = ['GET', 'POST'])
 def view_name_and_id():
     if request.method == 'POST':
-        num = request.form.get('search2')
+        num = request.values['search2']
         num = num.replace(',', '')
         if num.isdigit():
             num = int(num)
@@ -85,9 +87,15 @@ def add_one():
     DB.session.commit()
     return 'Songs have been added'
 
-# @APP.route('/_see_addresses')
-# def _see_addresses():
-#     return str([uip.ip for uip in UserIP.query.all()])
+@APP.route('/_see_addresses', methods = ['GET', 'POST'])
+def _see_addresses():
+    if request.method == 'POST':
+        passwd = request.values['admin_pass']
+        admin_passwd = getenv('ADMIN_PASS')
+        if admin_passwd == passwd:
+            return str([uip.ip for uip in UserIP.query.all()])
+        return 'INVALID PASSWORD'
+    return render_template('base3.html')
 
 if __name__ == '__main__':
     APP.run(host = '127.0.0.1', port = 8080, debug = True)
