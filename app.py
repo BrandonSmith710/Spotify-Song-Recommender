@@ -18,9 +18,11 @@ DB.init_app(APP)
 model = pickle.load(
     open('knn_model.h5', 'rb')
 )
+
 @APP.before_first_request
 def create_tables():
     DB.create_all()
+
 
 @APP.route('/', methods=['GET', 'POST'])
 def root():
@@ -46,6 +48,7 @@ def root():
         return render_template('results.html', answer = result)
     return render_template('base.html')
 
+
 @APP.route('/view_name_and_id', methods = ['GET', 'POST'])
 def view_name_and_id():
     if request.method == 'POST':
@@ -69,14 +72,16 @@ def view_name_and_id():
 '''the refresh route only need be used if a user would like to edit the size of the
    database, then simply run the add route with the adjusted parameters.'''
 
+
 @APP.route('/refresh')
 def refresh():
     DB.drop_all()
     DB.create_all()
     return 'Data has been refreshed.'
 
+
 @APP.route('/add')
-def add_one():
+def add():
     for i in range(50000):
         sid, n, a, d, e, l, m, li, v, t, d = df_song.iloc[i].values
         temp = Song(id = sid, ind = i, name = n, acoustic = a, danceable = d,
@@ -87,6 +92,7 @@ def add_one():
     DB.session.commit()
     return 'Songs have been added'
 
+
 @APP.route('/_see_addresses', methods = ['GET', 'POST'])
 def _see_addresses():
     if request.method == 'POST':
@@ -96,6 +102,7 @@ def _see_addresses():
             return str([uip.ip for uip in UserIP.query.all()])
         return 'INVALID PASSWORD'
     return render_template('base3.html')
+
 
 if __name__ == '__main__':
     APP.run(host = '127.0.0.1', port = 8080, debug = True)
